@@ -1,5 +1,8 @@
 import React, { useEffect, useState} from 'react'
 import EditContacts from './EditContacts'
+import '../styles/ListContacts.css'
+import imgEdit from '../img/edit.png'
+import imgDelete from '../img/deletar.png'
 
 function ListContacts() {
   const [contacts, setContacts] = useState([])
@@ -7,11 +10,7 @@ function ListContacts() {
   const [idEdit, setidEdit] = useState(0)
   const [search, setSearch] = useState("")
 
-  useEffect(() => {
-    getContacts()
-  }, [contacts.length, idDelete, idEdit, search])
-
-  let url='http://localhost:3000/contacts'
+  const url='http://localhost:3000/contacts'
 
   const getContacts = () => {
     const endpoint = Boolean(search) ? `${url}?q=${search}` : url 
@@ -25,6 +24,8 @@ function ListContacts() {
       setContacts(data)
     })
   }
+
+  useEffect(getContacts, [contacts.length, idDelete, idEdit, search])
 
   const deleteContact = (id) => {
     fetch(`http://localhost:3000/contacts/${id}`, {
@@ -42,11 +43,11 @@ function ListContacts() {
     });  
   } 
 
-  const inputSearch = (<>
-                        <label>Buscar Contacto</label>
+  const inputSearch = (<div className="inputSearch">
+                        <label hidden>Buscar Contacto</label>
                         <input type="search" name="" id="" 
-                        onChange={(event) => setSearch(event.target.value)} />
-                      </>
+                        onChange={(event) => setSearch(event.target.value)} placeholder ="Buscar"/>
+                      </div>
     )
 
   return (
@@ -54,19 +55,30 @@ function ListContacts() {
           {inputSearch}
 
           <EditContacts id={idEdit} />
-
-          <ul>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
             {contacts.map((contact) => {
-              return <li key={contact.id}>
-                {contact.nome}-
-                {contact.email}-
-                {contact.telefone}-
-                <button onClick={()=>{setidEdit(contact.id)}} >Editar</button>
-                <button onClick={() => deleteContact(contact.id)} >Deletar</button>
-              </li>
+              return(
+                <tr key={contact.id}>
+                  <td>{contact.nome}</td>
+                  <td>{contact.email}</td>
+                  <td>{contact.telefone}</td>
+                  <td><img onClick={()=>{setidEdit(contact.id)}} src={imgEdit} alt="Editar" /></td>
+                  <td><img onClick={() => deleteContact(contact.id)}  src={imgDelete} alt="Editar" /></td>
+                </tr>
+              )
             })}
-          </ul>
-         
+            </tbody>
+          </table>
         </div>
   )
 }

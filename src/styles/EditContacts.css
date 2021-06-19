@@ -1,0 +1,39 @@
+form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+.container-inputCreateEdit{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputCreateEdit{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputCreateEdit label{
+    margin-bottom: 5px;
+}
+
+.inputCreateEdit input{
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    padding: 10px;
+    border: none;
+}
+
+.buttonRegistrar{
+    width: 15%;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}

@@ -5,7 +5,7 @@ import ListContacts from './Componentes/ListContacts'
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Header/>
       <ListContacts/>
     </div>

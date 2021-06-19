@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import '../styles/EditContacts.css'
 
 function EditContacts(props) {
   const [nome, setNome] = useState('')
@@ -56,30 +57,33 @@ function EditContacts(props) {
   return (
     <>
       <form onSubmit={() => create()}>
-        <label>
-          Nome:
-          <input
-            type="text"
-            value={nome}
-            onChange={(event) => setNome(event.target.value)} />
-        </label>
+        <div className="container-inputCreateEdit">
 
-        <label>
-          Email:
-          <input 
-            type="text"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)} />
-        </label>
+          <div className="inputCreateEdit">
+            <label>Nome</label>
+            <input
+              type="text"
+              value={nome}
+              onChange={(event) => setNome(event.target.value)} />
+          </div>
 
-        <label>
-          Telefone
-          <input 
-            type="texto"
-            value={telefone}
-            onChange={(event) => setTelefone(event.target.value)} />
-        </label>
-        <button type="submit">Enviar</button>
+          <div className="inputCreateEdit">
+            <label>Email</label>
+            <input 
+              type="text"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)} />
+          </div>
+
+          <div className="inputCreateEdit">
+            <label>Telefone </label>
+            <input 
+              type="texto"
+              value={telefone}
+              onChange={(event) => setTelefone(event.target.value)} />
+          </div>
+        </div>
+        <button type="submit" className="buttonRegistrar">Registrar</button>
       </form>
     </>
   )
