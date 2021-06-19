@@ -1,10 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-function CreateContacts() {
+function EditContacts(props) {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [telefone, setTelefone] = useState('')
 
+  const buscarContact = () => {
+    if(!props.id){
+      return
+    }
+
+    fetch(`http://localhost:3000/contacts/${props.id}`)
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      setNome(data.nome)
+      setEmail(data.email)
+      setTelefone(data.telefone)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  useEffect(buscarContact, [props.id])
 
   const create = () => {
     if (!nome && !email && !telefone) return console.error('Campos obrigatórios!')
@@ -15,8 +35,16 @@ function CreateContacts() {
       telefone
     }
 
-    fetch('http://localhost:3000/contacts', {
-      method: 'POST',
+    let url = 'http://localhost:3000/contacts'
+    let metodo = 'POST'
+
+    if(props.id){
+        url = `${url}/${props.id}`
+        metodo = 'PUT'
+    }
+
+    fetch(url, {
+      method: metodo,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -24,6 +52,7 @@ function CreateContacts() {
     })
   }
 
+  
   return (
     <>
       <form onSubmit={() => create()}>
@@ -59,4 +88,4 @@ function CreateContacts() {
   
 }
 
-export default CreateContacts;
+export default EditContacts;
